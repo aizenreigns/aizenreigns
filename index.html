@@ -201,6 +201,15 @@
     .social-link svg { width:17px; height:17px; flex:none; display:block; fill:currentColor; }
     .social-link .mail-icon { fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
     .footer-copyright { margin:0; color:#7d96ad; font-size:9px; letter-spacing:.45px; text-align:center; }
+      .project-has-image { isolation:isolate; background:#071321; }
+    .project-screenshot { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:.7; filter:saturate(.76) contrast(1.08); transition:transform .55s ease,opacity .3s ease; pointer-events:none; }
+    .project-has-image::before { content:""; position:absolute; inset:0; z-index:1; pointer-events:none; background:linear-gradient(90deg,rgba(7,19,33,.94) 0%,rgba(7,19,33,.84) 50%,rgba(7,19,33,.54) 100%),linear-gradient(0deg,rgba(7,19,33,.78),transparent 60%); }
+    .project-has-image:hover .project-screenshot { transform:scale(1.035); opacity:.82; }
+    .project-has-image .project-tag { position:relative; z-index:3; background:rgba(7,19,33,.78); }
+    .project-has-image h3,.project-has-image p { z-index:3; text-shadow:0 1px 8px rgba(0,0,0,.86); }
+    .project-has-image .project-meta { z-index:3; text-shadow:0 1px 8px rgba(0,0,0,.9); }
+    .project-has-image .project-visual { display:none; }
+    .project-has-image::after { z-index:2; }
   </style>
 </head>
 <body>
@@ -213,8 +222,8 @@
         <span class="brand-name">AIZENREIGNS<small>ONLINE PORTFOLIO</small></span>
       </a>
       <nav class="nav" id="main-nav" aria-label="Main navigation" data-section-id="01a18835-53c1-7334-8e7b-29b7cd40178d">
-        <a class="active" href="#home">Briefing</a>
-        <a href="#projects">Operations</a>
+        <a class="active" href="#home">HOME</a>
+        <a href="#projects">Projects</a>
         <a href="#about">Operator</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -255,21 +264,21 @@
     <section class="section" id="projects" data-section-id="01a18835-53c1-7449-b0f8-51f66c16e46c">
       <div class="page">
         <div class="section-head reveal">
-          <div><p class="section-kicker" data-section-id="01a18835-53c1-74e5-af55-aaf960dcbb86">01 / mission archive</p><h2 data-section-id="01a18835-53c1-74ef-b0e6-bdf3d3f297c0">Selected operations</h2></div>
+          <div><p class="section-kicker" data-section-id="01a18835-53c1-74e5-af55-aaf960dcbb86">01 / mission archive</p><h2 data-section-id="01a18835-53c1-74ef-b0e6-bdf3d3f297c0">PREVIOUS PROJECTS</h2></div>
           <p class="section-note" data-section-id="01a18835-53c1-74f8-aef3-fb70bde11395">Replace these sample entries with real projects, case studies, or things you are proud to show.</p>
         </div>
         <div class="projects">
-          <a class="project reveal" data-sfx data-index="01" href="#contact">
-            <span class="project-tag">Featured / replace with category</span><span class="project-visual" aria-hidden="true"></span>
-            <h3 data-section-id="01a18835-53c1-752f-a113-fe732ba1aa64">Project name goes here</h3><p data-section-id="01a18835-53c1-7539-bcc3-946c65c2d181">Use this space for a one-sentence description: the challenge, your role, and the result.</p><span class="project-meta">Year — Role — Tools</span>
+          <a class="project reveal project-has-image" data-sfx data-index="01" href="#contact"><img class="project-screenshot" src="assets/images/steam-toolkit.png" alt="Steam Toolkit desktop interface screenshot" loading="lazy">
+            <span class="project-tag">Desktop Utility / Software Engineering</span><span class="project-visual" aria-hidden="true"></span>
+            <h3 data-section-id="01a18835-53c1-752f-a113-fe732ba1aa64">STEAM TOOLKIT</h3><p data-section-id="01a18835-53c1-7539-bcc3-946c65c2d181">A specialized desktop utility engineered to streamline game directory management, metadata fetching, and automated patching workflows for Steam titles. The application bridges the gap between raw Steam platform data and local game file implementation.</p><span class="project-meta">2026 — Developed for personal use.</span>
           </a>
-          <a class="project reveal" data-sfx data-index="02" href="#contact">
+          <a class="project reveal project-has-image" data-sfx data-index="02" href="#contact"><img class="project-screenshot" src="assets/images/request-system.png" alt="Interconnected Request System interface screenshot" loading="lazy">
             <span class="project-tag">Operation / 02</span><span class="project-visual" aria-hidden="true"></span>
-            <h3 data-section-id="01a18835-53c1-7559-8237-1b4d1d050212">Second project</h3><p data-section-id="01a18835-53c1-755d-9838-e00c8f60c3b7">Replace this with a short project summary.</p><span class="project-meta">View case file ↗</span>
+            <h3 data-section-id="01a18835-53c1-7559-8237-1b4d1d050212">Interconnected Request System</h3><p data-section-id="01a18835-53c1-755d-9838-e00c8f60c3b7">A simple app that simplifies the server to client handling of order management for a small company. It pushes the status updates in real-time to get more work done in the same amount of time.</p>
           </a>
           <a class="project reveal" data-sfx data-index="03" href="#contact">
             <span class="project-tag">Operation / 03</span><span class="project-visual" aria-hidden="true"></span>
-            <h3 data-section-id="01a18835-53c1-7574-9d83-ffc4f4ebf34c">Another project</h3><p data-section-id="01a18835-53c1-7577-ab70-4ae1dec74dd1">Add a result, image, or link when you are ready.</p><span class="project-meta">View case file ↗</span>
+            <h3 data-section-id="01a18835-53c1-7574-9d83-ffc4f4ebf34c">Another upcoming project</h3><p data-section-id="01a18835-53c1-7577-ab70-4ae1dec74dd1">Currently in development.</p>
           </a>
         </div>
       </div>
@@ -345,7 +354,7 @@
           musicToggle.setAttribute('aria-label', 'Turn background music off');
           musicToggle.title = 'Turn background music off';
           musicToggle.style.color = 'var(--acid)';
-          notify('Background music enabled. Add ui/sound/background.mp3 to supply your track.');
+          notify('Background music enabled.');
         } catch (_) {
           notify('Music file not found yet — add ui/sound/background.mp3 when ready.');
         }
