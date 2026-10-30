@@ -210,9 +210,30 @@
     .project-has-image .project-meta { z-index:3; text-shadow:0 1px 8px rgba(0,0,0,.9); }
     .project-has-image .project-visual { display:none; }
     .project-has-image::after { z-index:2; }
+    body.site-locked { overflow:hidden; }
+    .entry-overlay { position:fixed; inset:0; z-index:100; display:grid; place-items:center; padding:24px; background:rgba(4,13,24,.48); -webkit-backdrop-filter:blur(9px) saturate(.72); backdrop-filter:blur(9px) saturate(.72); opacity:1; visibility:visible; transition:opacity .55s ease,visibility .55s ease; }
+    .entry-overlay.is-dismissed { opacity:0; visibility:hidden; pointer-events:none; }
+    .entry-card { position:relative; width:min(560px,100%); padding:clamp(28px,6vw,54px); border:1px solid rgba(75,217,255,.55); background:linear-gradient(145deg,rgba(18,43,68,.96),rgba(7,19,33,.97)); text-align:center; box-shadow:0 0 70px rgba(39,143,222,.2),12px 12px 0 rgba(130,170,255,.08); }
+    .entry-card::before { content:""; position:absolute; inset:10px; border:1px solid rgba(232,244,255,.09); pointer-events:none; }
+    .entry-kicker { position:relative; margin:0 0 15px; color:var(--acid); font-size:9px; letter-spacing:2.4px; text-transform:uppercase; }
+    .entry-title { position:relative; margin:0; font:clamp(45px,10vw,78px)/.86 var(--display); letter-spacing:.5px; text-transform:uppercase; text-shadow:0 0 24px rgba(75,217,255,.2); }
+    .entry-title span { display:block; margin-top:9px; color:transparent; -webkit-text-stroke:1px rgba(232,244,255,.72); font-size:.57em; letter-spacing:2px; }
+    .entry-description { position:relative; max-width:360px; margin:22px auto 25px; color:#b6ccdf; font-size:11px; }
+    .entry-button { position:relative; min-width:190px; min-height:54px; font-size:11px; }
+    .entry-hint { position:relative; margin:18px 0 0; color:#7f9bb5; font-size:8px; letter-spacing:.7px; }
+    @media (prefers-reduced-motion: reduce) { .entry-overlay { transition:none; } }
   </style>
 </head>
-<body>
+<body class="site-locked">
+  <div class="entry-overlay" id="entry-overlay" role="dialog" aria-modal="true" aria-labelledby="entry-title">
+    <div class="entry-card">
+      <p class="entry-kicker">Secure connection // A-01</p>
+      <h1 class="entry-title" id="entry-title">AIZEN<span>FIELD PORTFOLIO</span></h1>
+      <p class="entry-description">The field portfolio is ready. Enter to view the operator profile, mission archive, and contact channels.</p>
+      <button class="button entry-button" id="enter-site" type="button" data-sfx>ENTER SITE <span class="arrow">↗</span></button>
+      <p class="entry-hint">BACKGROUND AUDIO WILL START AFTER ENTRY</p>
+    </div>
+  </div>
   <canvas id="network-canvas" aria-hidden="true" data-section-id="01a18880-ad87-7d2b-b6ae-fd43d8370e72"></canvas>
   <div class="topline"></div>
   <header class="masthead" data-section-id="01a18835-53c1-730a-9b48-88b3427e5b23">
@@ -345,18 +366,27 @@
     });
     sfx.addEventListener('error', () => { /* Add ui/sound/button-click.mp3 when your sound is ready. */ });
     const musicToggle = document.getElementById('music-toggle');
+    async function startBackgroundMusic() {
+      try {
+        if (!music.src) music.src = 'ui/sound/background.mp3';
+        await music.play();
+        musicToggle.setAttribute('aria-label', 'Turn background music off');
+        musicToggle.title = 'Turn background music off';
+        musicToggle.style.color = 'var(--acid)';
+        return true;
+      } catch (_) {
+        notify('Music file not found yet — add ui/sound/background.mp3 when ready.');
+        return false;
+      }
+    }
+    document.getElementById('enter-site').addEventListener('click', async () => {
+      document.getElementById('entry-overlay').classList.add('is-dismissed');
+      document.body.classList.remove('site-locked');
+      await startBackgroundMusic();
+    });
     musicToggle.addEventListener('click', async () => {
       if (music.paused) {
-        try {
-          music.src = 'ui/sound/background.mp3';
-          await music.play();
-          musicToggle.setAttribute('aria-label', 'Turn background music off');
-          musicToggle.title = 'Turn background music off';
-          musicToggle.style.color = 'var(--acid)';
-          notify('Background music enabled.');
-        } catch (_) {
-          notify('Music file not found yet — add ui/sound/background.mp3 when ready.');
-        }
+        if (await startBackgroundMusic()) notify('Background music enabled.');
       } else {
         music.pause();
         musicToggle.setAttribute('aria-label', 'Enable background music');
